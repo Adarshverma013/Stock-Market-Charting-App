@@ -19,10 +19,20 @@ export class CompaniesComponent implements OnInit {
       .subscribe((response) => {
         this.companies = response;
       });
+
+    //this.getCompanies();
   }
 
   onDeleteClick(id: string) {
     this.companyService.deleteCompany(id);
+    this.getCompanies();
+  }
+
+  getCompanies(){
+    this.companyService.getCompanies()
+    .subscribe((response) => {
+      this.companies = response;
+    });
   }
 
 }

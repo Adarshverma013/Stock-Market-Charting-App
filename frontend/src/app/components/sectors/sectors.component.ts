@@ -20,6 +20,7 @@ export class SectorsComponent implements OnInit {
       .subscribe(response => {
         this.sectors = response;
       });
+    //this.getSectors();
   }
 
   onDeleteClick(id: string) {
@@ -27,5 +28,13 @@ export class SectorsComponent implements OnInit {
     this.sectorService.deleteSector(id);
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currurl]);
+    this.getSectors();
+  }
+
+  getSectors(){
+    this.sectorService.getSectors()
+    .subscribe(response => {
+      this.sectors = response;
+    });
   }
 }

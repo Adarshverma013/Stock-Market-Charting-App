@@ -28,6 +28,10 @@ import { AuthService } from './services/auth.service';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 import {Chart} from 'chart.js';
+import { EditSectorComponent } from './components/sectors/edit-sector/edit-sector.component';
+import { EditStockExchangesComponent } from './components/stock-exchanges/edit-stock-exchanges/edit-stock-exchanges.component';
+import { EditCompanyComponent } from './components/companies/edit-company/edit-company.component';
+import { EditIpoComponent } from './components/ipos/edit-ipo/edit-ipo.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +50,11 @@ import {Chart} from 'chart.js';
     CreateIpoComponent,
     CreateStockExchangeComponent,
     SectorsComponent,
-    CreateSectorComponent
+    CreateSectorComponent,
+    EditSectorComponent,
+    EditStockExchangesComponent,
+    EditCompanyComponent,
+    EditIpoComponent
   ],
   imports: [
     BrowserModule,

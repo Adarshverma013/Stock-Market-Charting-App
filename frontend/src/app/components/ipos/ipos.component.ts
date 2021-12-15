@@ -19,9 +19,18 @@ export class IposComponent implements OnInit {
       .subscribe(response => {
         this.ipos = response;
       })
+    //this.getIpos();
   }
 
   onDeleteClick(id: string) {
     this.ipoService.deleteIpo(id);
+    this.getIpos();
+  }
+
+  getIpos(){
+    this.ipoService.getIpos()
+    .subscribe(response => {
+      this.ipos = response;
+    })
   }
 }
