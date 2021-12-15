@@ -8,6 +8,7 @@ import com.adarsh.sectorservice.application.dto.SectorDto;
 import com.adarsh.sectorservice.application.mapper.CompanyMapper;
 import com.adarsh.sectorservice.application.mapper.SectorMapper;
 import com.adarsh.sectorservice.application.model.Sector;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import com.adarsh.sectorservice.application.dao.SectorRepository;
 import com.adarsh.sectorservice.application.service.SectorService;
 
 @Service
+@Slf4j
 public class SectorServiceImpl implements SectorService
 {
 	@Autowired
@@ -69,6 +71,7 @@ public class SectorServiceImpl implements SectorService
 	@Override
 	public SectorDto addCompanyToSector(String sectorName, CompanyDto companyDto) 
 	{
+		log.info("Into add company of sector service impl");
 		Sector sector = sectorRepository.findByName(sectorName);
 		if(sector == null)
 			return null;

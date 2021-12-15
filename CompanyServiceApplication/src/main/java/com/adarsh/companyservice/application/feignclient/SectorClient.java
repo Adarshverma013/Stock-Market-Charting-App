@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.adarsh.companyservice.application.dto.CompanyDto;
 
-@FeignClient("sector-service")
+@FeignClient("SECTOR-SERVICE")
 public interface SectorClient 
 {
 	@PostMapping("/sectors/{sectorName}/companies")

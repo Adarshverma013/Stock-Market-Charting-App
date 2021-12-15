@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.adarsh.stockprice.application.dto.CompanyDto;
 
-@FeignClient("sector-service")
+@FeignClient("SECTOR-SERVICE")
 public interface SectorClient 
 {
 	@GetMapping("/sectors/{sectorName}/companies")

@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.adarsh.companyservice.application.feignclient.SectorClient;
 import com.adarsh.companyservice.application.feignclient.StockExchangeClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import com.adarsh.companyservice.application.model.Ipo;
 import com.adarsh.companyservice.application.service.CompanyService;
 
 @Service
+@Slf4j
 public class CompanyServiceImpl implements CompanyService
 {
 	@Autowired
@@ -66,6 +68,7 @@ public class CompanyServiceImpl implements CompanyService
 	@Override
 	public CompanyDto addCompany(CompanyDto companyDto) 
 	{
+		log.info("Into add company of company service impl");
 		Company company = companyMapper.toCompany(companyDto);
 		company = companyRepository.save(company);
 		companyDto = companyMapper.toCompanyDto(company);
@@ -74,6 +77,7 @@ public class CompanyServiceImpl implements CompanyService
 		for(String temp: stockExchangeNames) {
 			stockExchangeClient.addCompanyToStockExchange(temp, companyDto);
 		}
+		log.info("out of add company of company service impl");
 		return companyDto;
 	}
 	

@@ -1,0 +1,33 @@
+eureka:
+    client:
+        fetch-registry: true
+        register-with-eureka: true
+    instance:
+        hostname: localhost
+management:
+    security:
+        enabled: false
+server:
+    port: 9999
+spring:
+    application:
+        name: api-gateway
+    boot:
+        admin:
+            client:
+                url: http://localhost:8090
+    cloud:
+        config:
+            uri: http://localhost:8888
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+            default-filters:
+                - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+            globalcors:
+                corsConfigurations:
+                    '[/**]':
+                        allowedOrigins: "*"
+                        allowedMethods: "*"
+                        allowedHeaders: "*"

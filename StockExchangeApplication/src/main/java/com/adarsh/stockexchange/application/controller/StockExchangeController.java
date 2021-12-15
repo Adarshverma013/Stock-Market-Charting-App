@@ -8,27 +8,23 @@ import com.adarsh.stockexchange.application.exception.StockExchangeNotFoundExcep
 import com.adarsh.stockexchange.application.service.StockExchangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins= "*")
 @RequestMapping("/stockExchanges")
 public class StockExchangeController 
 {
 	@Autowired
 	private StockExchangeService stockExchangeService;
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "")
 	public ResponseEntity<List<StockExchangeDto>> getStockExchangesList() {
 		return ResponseEntity.ok(stockExchangeService.getStockExchangesList());
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<StockExchangeDto> getStockExchangeDetails(@PathVariable String id)
 			throws StockExchangeNotFoundException
@@ -39,12 +35,14 @@ public class StockExchangeController
 		}
 		return ResponseEntity.ok(stockExchangeDto);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@PostMapping(path = "")
 	public ResponseEntity<StockExchangeDto> addStockExchange(@RequestBody StockExchangeDto stockExchangeDto) {
 		return ResponseEntity.ok(stockExchangeService.addStockExchange(stockExchangeDto));
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@PutMapping(path = "")
 	public ResponseEntity<StockExchangeDto> editStockExchange(@RequestBody StockExchangeDto stockExchangeDto)
 			throws StockExchangeNotFoundException 
@@ -55,12 +53,14 @@ public class StockExchangeController
 		}
 		return ResponseEntity.ok(updatedStockExchangeDto);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@DeleteMapping(path = "/{id}")
 	public void deleteStockExchange(@PathVariable String id) {
 		stockExchangeService.deleteStockExchange(id);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/{id}/companies")
 	public ResponseEntity<List<CompanyDto>> getCompanies(@PathVariable String id)
 			throws StockExchangeNotFoundException  
@@ -73,7 +73,8 @@ public class StockExchangeController
 	}
 	
 	/* Feign Client Mapping */
-	
+
+	@CrossOrigin(origins= "*")
 	@PostMapping(path = "/{stockExchangeName}/companies")
 	public void addCompanyToStockExchange(@PathVariable String stockExchangeName, @RequestBody CompanyDto companyDto)
 			throws StockExchangeNotFoundException  

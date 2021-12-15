@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.adarsh.companyservice.application.dto.CompanyDto;
 
-@FeignClient("stock-exchange-service")
+@FeignClient("STOCK-EXCHANGE-SERVICE")
 public interface StockExchangeClient 
 {
 	@PostMapping("/stockExchanges/{stockExchangeName}/companies")

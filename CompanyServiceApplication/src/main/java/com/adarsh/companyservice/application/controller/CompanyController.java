@@ -2,6 +2,7 @@ package com.adarsh.companyservice.application.controller;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +25,23 @@ import com.adarsh.companyservice.application.service.CompanyService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-@CrossOrigin(origins= "http://localhost:4200")
-@RequestMapping("/company-service/companies")
+@CrossOrigin(origins= "*")
+@RequestMapping("/companies")
+@Slf4j
 public class CompanyController 
 {
 	@Autowired
 	private CompanyService companyService;
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "")
 	public ResponseEntity<List<CompanyDto>> getCompanies() 
 	{
 		return ResponseEntity
 				.ok(companyService.getCompanies());
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<CompanyDto> getCompanyDetails(@PathVariable String id)
 			throws CompanyNotFoundException
@@ -48,13 +52,15 @@ public class CompanyController
 		}
 		return ResponseEntity.ok(companyDto);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/match/{pattern}")
 	public ResponseEntity<List<CompanyDto>> getMatchingCompanies(@PathVariable String pattern) 
 	{
 		return ResponseEntity.ok(companyService.getMatchingCompanies(pattern));
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/{id}/ipos")
 	public ResponseEntity<List<IpoDto>> getCompanyIpoDetails(@PathVariable String id)
 			throws CompanyNotFoundException 
@@ -65,7 +71,8 @@ public class CompanyController
 		}
 		return ResponseEntity.ok(ipoDtos);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/{id}/stockPrices")
 	public ResponseEntity<List<StockPriceDto>> getStockPrices(@PathVariable String id)
 			throws CompanyNotFoundException
@@ -76,13 +83,16 @@ public class CompanyController
 		}
 		return ResponseEntity.ok(stockPriceDtos);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@PostMapping(path = "")
 	@HystrixCommand(fallbackMethod = "defaultResponse")
 	public ResponseEntity<?> addCompany(@RequestBody CompanyDto companyDto) {
+		log.info("Into company controller add company");
 		return ResponseEntity.ok(companyService.addCompany(companyDto));
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@PutMapping(path = "")
 	public ResponseEntity<CompanyDto> editCompany(@RequestBody CompanyDto companyDto)
 			throws CompanyNotFoundException 
@@ -93,14 +103,16 @@ public class CompanyController
 		}
 		return ResponseEntity.ok(updatedCompanyDto);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@DeleteMapping(path = "/{id}")
 	public void deleteCompany(@PathVariable String id) {
 		companyService.deleteCompany(id);
 	}
 	
 	/* Feign Client Mappings */
-	
+
+	@CrossOrigin(origins= "*")
 	@PostMapping(path = "/{companyName}/ipos")
 	public void addIpoToCompany(@PathVariable String companyName, @RequestBody IpoDto ipoDto)
 			throws CompanyNotFoundException
@@ -110,7 +122,8 @@ public class CompanyController
 			throw new CompanyNotFoundException("Company not with name : " + companyName);
 		}
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@PostMapping(path = "/{companyCode}/stockPrices")
 	public void addStockPriceToCompany(@PathVariable String companyCode, @RequestBody StockPriceDto stockPriceDto) 
 			throws CompanyNotFoundException
@@ -122,7 +135,7 @@ public class CompanyController
 	}
 	
 	/* Feign Client Default Response */
-	
+	@CrossOrigin(origins= "*")
 	public ResponseEntity<?> defaultResponse(@RequestBody CompanyDto companyDto) {
 		String err = "Fallback error as the microservice is down.";
 		return ResponseEntity

@@ -28,7 +28,7 @@ public class SpringFoxConfig
     }
     
     private Predicate<String> postPaths() {
-        return or(regex("/stock-price-service/stockPrices.*"));
+        return or(regex("/stockPrices.*"));
     }
     
     private ApiInfo apiInfo() 

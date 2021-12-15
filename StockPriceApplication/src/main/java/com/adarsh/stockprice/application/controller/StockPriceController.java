@@ -7,14 +7,7 @@ import com.adarsh.stockprice.application.dto.SectorCompareRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.adarsh.stockprice.application.dto.CompanyCompareRequest;
 import com.adarsh.stockprice.application.dto.StockPriceDto;
@@ -23,17 +16,20 @@ import com.adarsh.stockprice.application.service.StockPriceService;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 
 @RestController
-@RequestMapping("/stock-price-service/stockPrices")
+@CrossOrigin(origins= "*")
+@RequestMapping("/stockPrices")
 public class StockPriceController 
 {
 	@Autowired
 	private StockPriceService stockPriceService;
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "")
 	public ResponseEntity<List<StockPriceDto>> findAll() {
 		return ResponseEntity.ok(stockPriceService.findAll());
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<StockPriceDto> findById(@PathVariable String id)
 			throws StockPriceNotFoundException 
@@ -44,7 +40,8 @@ public class StockPriceController
 		}
 		return ResponseEntity.ok(stockPriceDto);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/compareCompany")
 	public ResponseEntity<?> companyComparison(@RequestBody CompanyCompareRequest compareRequest)
 	{
@@ -58,7 +55,8 @@ public class StockPriceController
 		}
 		return ResponseEntity.ok(stockPriceDtos);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@GetMapping(path = "/compareSector")
 	@HystrixCommand(fallbackMethod = "defaultResponse")
 	public ResponseEntity<?> sectorComparison(@RequestBody SectorCompareRequest compareRequest)
@@ -73,14 +71,16 @@ public class StockPriceController
 		}
 		return ResponseEntity.ok(stockPriceDtos);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@PostMapping(path = "")
 	public ResponseEntity<?> save(@RequestBody List<StockPriceDto> stockPriceDtos) {
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
 				.body(stockPriceService.save(stockPriceDtos));
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@PutMapping(path = "")
 	public ResponseEntity<StockPriceDto> update(@RequestBody StockPriceDto stockPriceDto)
 			throws StockPriceNotFoundException
@@ -91,14 +91,15 @@ public class StockPriceController
 		}
 		return ResponseEntity.ok(updatedStockPriceDto);
 	}
-	
+
+	@CrossOrigin(origins= "*")
 	@DeleteMapping(path = "/{id}")
 	public void deleteById(@PathVariable String id) {
 		stockPriceService.deleteById(id);
 	}
 	
 	/* Feign Client Default Response */
-	
+	@CrossOrigin(origins= "*")
 	public ResponseEntity<?> defaultResponse(@RequestBody SectorCompareRequest compareRequest) {
 		String err = "Fallback error as the microservice is down.";
 		return ResponseEntity
